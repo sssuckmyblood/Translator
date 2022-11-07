@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="origin_label">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -32,7 +32,7 @@
      <string>РУССКИЙ</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="dest_label">
     <property name="geometry">
      <rect>
       <x>365</x>
@@ -50,7 +50,7 @@
      <string>АНГЛИЙСКИЙ</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="origin">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -60,7 +60,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="dest">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -70,7 +70,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="switch_2">
     <property name="geometry">
      <rect>
       <x>233</x>
@@ -95,7 +95,7 @@
      <string>&lt;------&gt;</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="translate">
     <property name="geometry">
      <rect>
       <x>200</x>

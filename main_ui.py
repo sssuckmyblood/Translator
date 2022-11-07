@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import main
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -55,6 +55,7 @@ class Ui_MainWindow(object):
         self.translate.setFont(font)
         self.translate.setObjectName("translate")
         MainWindow.setCentralWidget(self.centralwidget)
+        self.translate.clicked.connect(self.translate_clicked)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -66,6 +67,9 @@ class Ui_MainWindow(object):
         self.dest_label.setText(_translate("MainWindow", "АНГЛИЙСКИЙ"))
         self.switch_2.setText(_translate("MainWindow", "<------>"))
         self.translate.setText(_translate("MainWindow", "Перевести"))
+
+    def translate_clicked(self):
+        self.dest.setText(main.translate_action(self.origin.text()))
 
 
 if __name__ == "__main__":

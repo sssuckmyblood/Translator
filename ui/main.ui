@@ -11,45 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Словарь</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="origin_label">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>20</y>
-      <width>64</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>РУССКИЙ</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="dest_label">
-    <property name="geometry">
-     <rect>
-      <x>365</x>
-      <y>20</y>
-      <width>95</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>АНГЛИЙСКИЙ</string>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="origin">
     <property name="geometry">
      <rect>
@@ -63,20 +27,20 @@
    <widget class="QLineEdit" name="dest">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>322</x>
       <y>50</y>
-      <width>211</width>
+      <width>184</width>
       <height>31</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="switch_2">
+   <widget class="QPushButton" name="switch_lan">
     <property name="geometry">
      <rect>
-      <x>233</x>
+      <x>241</x>
       <y>20</y>
       <width>75</width>
-      <height>23</height>
+      <height>24</height>
      </rect>
     </property>
     <property name="font">
@@ -98,8 +62,8 @@
    <widget class="QPushButton" name="translate">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>100</y>
+      <x>205</x>
+      <y>99</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -111,6 +75,26 @@
     </property>
     <property name="text">
      <string>Перевести</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="origin_lan">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>184</width>
+      <height>24</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="dest_lan">
+    <property name="geometry">
+     <rect>
+      <x>323</x>
+      <y>20</y>
+      <width>184</width>
+      <height>24</height>
+     </rect>
     </property>
    </widget>
   </widget>

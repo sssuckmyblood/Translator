@@ -9,34 +9,39 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QMessageBox
+
 import main
+import sqlite
 
 class Ui_MainWindow(object):
+    data = {
+        "РУССКИЙ" : "ru",
+        "БЕЛОРУССКИЙ": "be",
+        "УКРАИНСКИЙ": "uk",
+        "АНГЛИЙСКИЙ" : "en",
+        "НЕМЕЦКИЙ" : "de",
+        "ФРАНЦУЗСКИЙ": "fr",
+
+    }
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(567, 167)
+        MainWindow.setMaximumSize(567, 167)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.origin_label = QtWidgets.QLabel(self.centralwidget)
-        self.origin_label.setGeometry(QtCore.QRect(100, 20, 64, 18))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.origin_label.setFont(font)
-        self.origin_label.setObjectName("origin_label")
-        self.dest_label = QtWidgets.QLabel(self.centralwidget)
-        self.dest_label.setGeometry(QtCore.QRect(365, 20, 95, 18))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.dest_label.setFont(font)
-        self.dest_label.setObjectName("dest_label")
         self.origin = QtWidgets.QLineEdit(self.centralwidget)
         self.origin.setGeometry(QtCore.QRect(50, 50, 184, 31))
         self.origin.setObjectName("origin")
+        self.origin.setFont(QFont('Arial', 12))
         self.dest = QtWidgets.QLineEdit(self.centralwidget)
-        self.dest.setGeometry(QtCore.QRect(310, 50, 211, 31))
+        self.dest.setGeometry(QtCore.QRect(322, 50, 184, 31))
         self.dest.setObjectName("dest")
-        self.switch_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.switch_2.setGeometry(QtCore.QRect(233, 20, 75, 23))
+        self.dest.setFont(QFont('Arial', 12))
+        self.dest.setPlaceholderText("ПЕРЕВОД")
+        self.switch_lan = QtWidgets.QPushButton(self.centralwidget)
+        self.switch_lan.setGeometry(QtCore.QRect(241, 20, 75, 24))
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(True)
@@ -46,31 +51,78 @@ class Ui_MainWindow(object):
         font.setStrikeOut(True)
         font.setKerning(False)
         font.setStyleStrategy(QtGui.QFont.PreferAntialias)
-        self.switch_2.setFont(font)
-        self.switch_2.setObjectName("switch_2")
+        self.switch_lan.setFont(font)
+        self.switch_lan.setObjectName("switch_lan")
         self.translate = QtWidgets.QPushButton(self.centralwidget)
-        self.translate.setGeometry(QtCore.QRect(200, 100, 141, 31))
+        self.translate.setGeometry(QtCore.QRect(205, 99, 141, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.translate.setFont(font)
         self.translate.setObjectName("translate")
+        self.origin_lan = QtWidgets.QComboBox(self.centralwidget)
+        self.origin_lan.setGeometry(QtCore.QRect(50, 20, 184, 24))
+        self.origin_lan.setObjectName("origin_lan")
+        self.dest_lan = QtWidgets.QComboBox(self.centralwidget)
+        self.dest_lan.setGeometry(QtCore.QRect(323, 20, 184, 24))
+        self.dest_lan.setObjectName("dest_lan")
+        for key, value in self.data.items():
+            self.origin_lan.addItem(key, value)
+            self.dest_lan.addItem(key, value)
+        self.dest_lan.setCurrentIndex(1)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.translate.clicked.connect(self.translate_clicked)
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.translate.clicked.connect(self.translate_clicked)
+        self.origin_lan.activated.connect(self.origin_lan_activated)
+        self.dest_lan.activated.connect(self.dest_lan_activated)
+        self.switch_lan.clicked.connect(self.switch_lan_clicked)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.origin_label.setText(_translate("MainWindow", "РУССКИЙ"))
-        self.dest_label.setText(_translate("MainWindow", "АНГЛИЙСКИЙ"))
-        self.switch_2.setText(_translate("MainWindow", "<------>"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Словарь"))
+        self.switch_lan.setText(_translate("MainWindow", "<------>"))
         self.translate.setText(_translate("MainWindow", "Перевести"))
 
-    def translate_clicked(self):
-        self.dest.setText(main.translate_action(self.origin.text()))
+    def origin_lan_activated(self, index):
+        if self.origin_lan.itemData(index) == self.dest_lan.currentData():
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Выберите разные языки')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
+    def dest_lan_activated(self, index):
+        if self.origin_lan.currentData() == self.dest_lan.itemData(index) :
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Выберите разные языки')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+    def switch_lan_clicked(self):
+            tmp = self.origin_lan.currentText()
+            self.origin_lan.setCurrentText(self.dest_lan.currentText())
+            self.dest_lan.setCurrentText(tmp)
+
+    def translate_clicked(self):
+        if self.origin_lan.currentData() == self.dest_lan.currentData():
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Выберите разные языки')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+        else:
+            if self.origin.text():
+                origin = self.origin_lan.currentData()
+                dest = self.dest_lan.currentData()
+                self.dest.setText(main.translate_action(self.origin.text(),
+                                                    origin,
+                                                    dest
+                                                ))
 
 if __name__ == "__main__":
     import sys
@@ -80,3 +132,5 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
+

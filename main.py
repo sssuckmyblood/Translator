@@ -1,9 +1,10 @@
 import main_ui
-
-from googletrans import Translator
-
-translator = Translator()
+import sqlite
 
 
-def translate_action(text):
-    return translator.translate(text, src="ru", dest="en").text
+db = sqlite.connect_db()
+
+def translate_action(text, origin, dest):
+        from googletrans import Translator
+        translator = Translator()
+        return translator.translate(text, src=origin, dest=dest).text

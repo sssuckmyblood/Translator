@@ -14,88 +14,172 @@
    <string>Словарь</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="origin">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>50</y>
-      <width>184</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="dest">
-    <property name="geometry">
-     <rect>
-      <x>322</x>
-      <y>50</y>
-      <width>184</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="switch_lan">
-    <property name="geometry">
-     <rect>
-      <x>241</x>
-      <y>20</y>
-      <width>75</width>
-      <height>24</height>
+      <x>0</x>
+      <y>0</y>
+      <width>567</width>
+      <height>167</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>13</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>false</underline>
-      <strikeout>true</strikeout>
-      <stylestrategy>PreferAntialias</stylestrategy>
-      <kerning>false</kerning>
+      <pointsize>10</pointsize>
      </font>
     </property>
-    <property name="text">
-     <string>&lt;------&gt;</string>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
-   </widget>
-   <widget class="QPushButton" name="translate">
-    <property name="geometry">
-     <rect>
-      <x>205</x>
-      <y>99</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Перевести</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="origin_lan">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>20</y>
-      <width>184</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="dest_lan">
-    <property name="geometry">
-     <rect>
-      <x>323</x>
-      <y>20</y>
-      <width>184</width>
-      <height>24</height>
-     </rect>
-    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Перевод</string>
+     </attribute>
+     <widget class="QComboBox" name="dest_lan">
+      <property name="geometry">
+       <rect>
+        <x>338</x>
+        <y>10</y>
+        <width>184</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dest">
+      <property name="geometry">
+       <rect>
+        <x>338</x>
+        <y>40</y>
+        <width>184</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="origin_lan">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>184</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="switch_lan">
+      <property name="geometry">
+       <rect>
+        <x>239</x>
+        <y>10</y>
+        <width>75</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+        <underline>false</underline>
+        <strikeout>true</strikeout>
+        <stylestrategy>PreferAntialias</stylestrategy>
+        <kerning>false</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;------&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="origin">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>184</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="translate">
+      <property name="geometry">
+       <rect>
+        <x>202</x>
+        <y>85</y>
+        <width>147</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Перевести</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Словарь</string>
+     </attribute>
+     <widget class="QComboBox" name="db_combo">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>391</width>
+        <height>28</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="search">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>10</y>
+        <width>91</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Поиск</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>391</width>
+        <height>81</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

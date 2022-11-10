@@ -9,10 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 
 import main
-import sqlite
+
 
 class Ui_MainWindow(object):
     data = {
@@ -24,11 +24,12 @@ class Ui_MainWindow(object):
         "ФРАНЦУЗСКИЙ": "fr",
 
     }
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(567, 167)
-        MainWindow.setMinimumSize(567,167)
-        MainWindow.setMaximumSize(567,167)
+        MainWindow.setMinimumSize(567, 167)
+        MainWindow.setMaximumSize(567, 167)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
@@ -52,6 +53,7 @@ class Ui_MainWindow(object):
         self.dest.setFont(font)
         self.dest.setReadOnly(True)
         self.dest.setObjectName("dest")
+        self.dest.setPlaceholderText("ПЕРЕВОД")
         self.origin_lan = QtWidgets.QComboBox(self.tab)
         self.origin_lan.setGeometry(QtCore.QRect(30, 10, 184, 24))
         font = QtGui.QFont()
@@ -114,56 +116,85 @@ class Ui_MainWindow(object):
         self.dest_lan.activated.connect(self.dest_lan_activated)
         self.switch_lan.clicked.connect(self.switch_lan_clicked)
         self.tabWidget.currentChanged.connect(self.tab_change)
+        self.search.clicked.connect(self.search_clicked)
 
     def tab_change(self, index):
         if index == 1:
-            print("словарь")
+            MainWindow.setMaximumSize(767, 367)
+            MainWindow.resize(767, 367)
+            list = main.get_word_list()
+            temp = []
+            for x in list:
+                if x not in temp: temp.append(x)
+            self.db_combo.clear()
+            for row in temp:
+                self.db_combo.addItem(row[0])
+        else:
+            MainWindow.resize(567, 167)
+            MainWindow.setMinimumSize(567, 167)
+            MainWindow.setMaximumSize(567, 167)
+
+    def search_clicked(self):
+        list_d = main.get_translation(self.db_combo.currentText())
+        numRows = len(list_d)
+        numColumns = 2
+        self.tableWidget.setRowCount(numRows)
+        self.tableWidget.setColumnCount(numColumns)
+        for r in range(numRows):
+            tmp = list(list_d[r])
+            tmp[0] = (next(ch for ch, code in self.data.items() if code == list_d[r][0]))
+            list_d[r] = tuple(tmp)
+            for c in range(numColumns):
+                    self.tableWidget.setItem(r, c, QTableWidgetItem(list_d[r][c]))
 
     def origin_lan_activated(self, index):
-            if self.origin_lan.itemData(index) == self.dest_lan.currentData():
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setText("Error")
-                msg.setInformativeText('Выберите разные языки')
-                msg.setWindowTitle("Error")
-                msg.exec_()
+        self.origin.clear()
+        self.dest.clear()
+        if self.origin_lan.itemData(index) == self.dest_lan.currentData():
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Выберите разные языки')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
     def dest_lan_activated(self, index):
-            if self.origin_lan.currentData() == self.dest_lan.itemData(index):
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setText("Error")
-                msg.setInformativeText('Выберите разные языки')
-                msg.setWindowTitle("Error")
-                msg.exec_()
+        self.origin.clear()
+        self.dest.clear()
+        if self.origin_lan.currentData() == self.dest_lan.itemData(index):
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Выберите разные языки')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
     def switch_lan_clicked(self):
-            tmp = self.origin_lan.currentText()
-            self.origin_lan.setCurrentText(self.dest_lan.currentText())
-            self.dest_lan.setCurrentText(tmp)
-            tmp_text = self.origin.text()
-            self.origin.setText(self.dest.text())
-            self.dest.setText(tmp_text)
+        tmp = self.origin_lan.currentText()
+        self.origin_lan.setCurrentText(self.dest_lan.currentText())
+        self.dest_lan.setCurrentText(tmp)
+        tmp_text = self.origin.text()
+        self.origin.setText(self.dest.text())
+        self.dest.setText(tmp_text)
 
     def translate_clicked(self):
-            if self.origin_lan.currentData() == self.dest_lan.currentData():
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setText("Error")
-                msg.setInformativeText('Выберите разные языки')
-                msg.setWindowTitle("Error")
-                msg.exec_()
+        if self.origin_lan.currentData() == self.dest_lan.currentData():
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Выберите разные языки')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
-            else:
-                if self.origin.text():
-                    origin = self.origin_lan.currentData()
-                    dest = self.dest_lan.currentData()
-                    self.dest.setText(main.translate_action(self.origin.text(),
-                                                            origin,
-                                                            dest
-                                                            ))
-
-
+        else:
+            if self.origin.text():
+                origin = self.origin_lan.currentData()
+                dest = self.dest_lan.currentData()
+                text = self.origin.text().lower().strip()
+                self.dest.setText(main.translate_action(text,
+                                                        origin,
+                                                        dest
+                                                        ))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -177,6 +208,7 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

@@ -7,20 +7,10 @@ def connect_db():
                                                id integer PRIMARY KEY NOT NULL,
                                                origin_text varchar,
                                                dest_lan varchar,
-                                               dest_text
+                                               dest_text varchar
                                            ); 
-                           CREATE TABLE IF NOT EXISTS be (
-                                               id integer PRIMARY KEY NOT NULL,
-                                               origin_text varchar,
-                                               dest_lan varchar,
-                                               dest_text
-                                           ); 
-                           CREATE TABLE IF NOT EXISTS uk (
-                                               id integer PRIMARY KEY NOT NULL,
-                                               origin_text varchar,
-                                               dest_lan varchar,
-                                               dest_text
-                                           );                               """
+                             create unique index if not exists ru_uni on ru (dest_lan, dest_text);                            
+                              """
         conn = sqlite3.connect('translator.db')
         c = conn.cursor()
         c.executescript(create_table)

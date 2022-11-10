@@ -25,6 +25,7 @@ def connect_db():
         c = conn.cursor()
         c.executescript(create_table)
         conn.commit()
+
         return conn
     except sqlite3.Error as error:
         return error

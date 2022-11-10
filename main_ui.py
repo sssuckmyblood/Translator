@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 import main
-
+import sqlite
 
 class Ui_MainWindow(object):
     data = {
@@ -27,6 +27,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(567, 167)
+        MainWindow.setMinimumSize(567,167)
+        MainWindow.setMaximumSize(567,167)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
@@ -57,14 +59,14 @@ class Ui_MainWindow(object):
         self.origin_lan.setFont(font)
         self.origin_lan.setObjectName("origin_lan")
         self.switch_lan = QtWidgets.QPushButton(self.tab)
-        self.switch_lan.setGeometry(QtCore.QRect(239, 10, 75, 24))
+        self.switch_lan.setGeometry(QtCore.QRect(239, 10, 80, 24))
         font = QtGui.QFont()
-        font.setPointSize(13)
+        font.setPointSize(11)
         font.setBold(True)
         font.setItalic(False)
         font.setUnderline(False)
         font.setWeight(75)
-        font.setStrikeOut(True)
+        font.setStrikeOut(False)
         font.setKerning(False)
         font.setStyleStrategy(QtGui.QFont.PreferAntialias)
         self.switch_lan.setFont(font)
@@ -111,6 +113,11 @@ class Ui_MainWindow(object):
         self.origin_lan.activated.connect(self.origin_lan_activated)
         self.dest_lan.activated.connect(self.dest_lan_activated)
         self.switch_lan.clicked.connect(self.switch_lan_clicked)
+        self.tabWidget.currentChanged.connect(self.tab_change)
+
+    def tab_change(self, index):
+        if index == 1:
+            print("словарь")
 
     def origin_lan_activated(self, index):
             if self.origin_lan.itemData(index) == self.dest_lan.currentData():
@@ -134,6 +141,9 @@ class Ui_MainWindow(object):
             tmp = self.origin_lan.currentText()
             self.origin_lan.setCurrentText(self.dest_lan.currentText())
             self.dest_lan.setCurrentText(tmp)
+            tmp_text = self.origin.text()
+            self.origin.setText(self.dest.text())
+            self.dest.setText(tmp_text)
 
     def translate_clicked(self):
             if self.origin_lan.currentData() == self.dest_lan.currentData():
@@ -158,7 +168,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Словарь"))
-        self.switch_lan.setText(_translate("MainWindow", "<------>"))
+        self.switch_lan.setText(_translate("MainWindow", "<---->"))
         self.translate.setText(_translate("MainWindow", "Перевести"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Перевод"))
         self.search.setText(_translate("MainWindow", "Поиск"))

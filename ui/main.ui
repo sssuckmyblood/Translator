@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>167</height>
+    <width>767</width>
+    <height>367</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>567</width>
-      <height>167</height>
+      <width>767</width>
+      <height>367</height>
      </rect>
     </property>
     <property name="font">
@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -149,21 +149,31 @@
      <widget class="QComboBox" name="db_combo">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>70</x>
         <y>10</y>
         <width>391</width>
         <height>28</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
      </widget>
      <widget class="QPushButton" name="search">
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>10</y>
-        <width>91</width>
+        <x>500</x>
+        <y>11</y>
+        <width>201</width>
         <height>28</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Поиск</string>
@@ -172,11 +182,16 @@
      <widget class="QTableWidget" name="tableWidget">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>391</width>
-        <height>81</height>
+        <x>20</x>
+        <y>60</y>
+        <width>701</width>
+        <height>261</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
       </property>
      </widget>
     </widget>
